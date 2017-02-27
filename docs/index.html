@@ -1,0 +1,229 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/css/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/css/theme/simple.min.css">
+    <style>
+        code {
+            padding: 0;
+            padding-top: 0.2em;
+            padding-bottom: 0.2em;
+            margin: 0;
+            font-size: 85%;
+            background-color: rgba(0, 0, 0, 0.04);
+            border-radius: 3px;
+        }
+
+        code:before {
+            letter-spacing: -0.2em;
+            content: "\00a0";
+
+        }
+
+        code:after {
+            letter-spacing: -0.2em;
+            content: "\00a0";
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n">
+
+            <script type="text/template">
+                ##From NPM to Yarn
+
+
+
+                ###what is NPM
+
+
+                **NPM** stand for "**N**ode **P**ackage **M**anger" and it's come to handle node modules, from a remote and local repository, so that can distributed to other developers
+
+
+                NPM isn't the only package manger system, there is a lot other like:
+                - PIP for python
+                - Nuget for C#
+                - JSM for Java
+                - etc...
+
+
+                The default repository that NPM set out of the box is https://registry.npmjs.org, and his site is https://www.npmjs.com
+
+                (in this we will use a local repository call [**sinopia**](https://www.npmjs.com/package/sinopia) but this is out of scope)
+
+
+
+                ###Create and Publish Packages
+
+
+                #### `package.json`
+                * the manifest of each package is `package.json` file.
+                * this file contain the metadata of the package.
+                * the metadata contain a lot of properties, like name, version, description and etc... of the package.
+                * we will focus on `dependencies` property.
+
+
+                to create a `package.json` file run `npm init`, this will start to ask you question about you package and place them in the file
+
+                (also know commend is `npm init -f`, this will auto replay the question and just create the `package.json`)
+
+
+                #### package.json `dependencies` (1/2)
+                * this property list the **dependencies** of this package.
+                * it's a key value object:
+                    * the key represent the name of the the package
+                    * the value is the version of the package.
+                * the version system known as [`semver.inc`](https://github.com/npm/node-semver#prerelease-tags)
+
+
+                #### package.json `dependencies` (2/2)
+                * there are types of dependencies like `devDependencies` and `peerDependencies` (out of this lecture scope).
+                * add a new dependency to the package by running `npm install < package-name > --save`.
+                * installing the dependencies by running `npm install` on the folder that contain the `package.json`
+
+
+                #### package.json `dependencies` example
+                ```
+                    {
+                        "name": "guessing-game-ui",
+                        "version": "1.0.0",
+                        "description": "",
+                        "main": "index.js",
+                        "author": "",
+                        "license": "ISC",
+                        "dependencies": {
+                            "guessing-game-logic": "^1.0.1"
+                        }
+                    }
+                ```
+
+
+                #### Publish package (1/2)
+                1. create an account in the repository (per repertory out of scope), done once per account.
+                2. register the account in the machine, done once per machine.
+                    * run `npm adduser` and enter the username and password.
+
+
+                #### Publish package (2/2)
+                3. `npm publish`.
+                    * this command upload the package to the repertory.
+                    * package wouldn't upload if there is another package with the same **name and version**.
+                    * to solve this use `npm version major | minor | patch | etc..`. this will update the version by the argument. then use `npm publish`.
+
+
+                ### DEMO
+
+
+
+                ## `yarn` introduction.
+
+
+                ### What is `yarn`?
+                * `yarn`,just like `npm`, is a JavaScript package manger.
+                * `yarn` come to solve same issues that `npm` have.
+                * `yarn` can use `npm` repositories (so no need to create new repository just for `yarn`)
+                * develop by **Facebook** with **Google**
+
+
+                ### Why using `yarn`?
+                * more fast.
+                * more reliable.
+                * more secure.
+
+
+                ### Start using `yarn`.
+                1. download nodejs and `npm`.
+                2. run (as administrator) `npm install --global yarn`.
+                3. run `yarn --version`.
+                4. that it! ([for more info](https://yarnpkg.com/en/docs/install))
+
+
+                ### `npm` vs `yarn` commands
+
+                | NPM | YARN |
+                | ----| ---- |
+                |`npm install`| `yarn`|
+                |`npm install rxjs --save`| `yarn add rxjs`|
+                |`npm uninstall rxjs --save`| `yarn remove rxjs`|
+                |`npm install rxjs --global`| `npm install rxjs --global`|
+                |`npm update --save`| `yarn upgrade`|
+
+
+                ### `npm`, `yarn` common commands
+                * `init`
+                * `publish`
+                * `run`
+                * `cache clean`
+                * `login`
+                * `test`
+
+
+
+                ## Why `yarn` fast.
+
+
+                `npm install` is a long process.
+                the reason for that is that `npm install` work one by one (download and build one package at a time).
+
+                also `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies.
+
+
+                `yarn` doesn't work like `npm`.
+
+                `yarn` download the dependencies parallel and store all of them in a cache folder that reachable offline.
+
+                * once `yarn` call
+                * for dependencies that **hasn't** been cached, `yarn` will download them parallel, and store them in the cache folder.
+                * for dependencies that **has** been cache, `yarn` will get them form the cache folder.
+
+
+                ##[npm vs yarn speed test](https://github.com/appleboy/npm-vs-yarn)
+
+
+
+                ## Why `yarn` reliable
+
+
+                * hello
+
+
+
+                ## Why `yarn` security
+
+
+                * `npm` can execute file, after install, using the `{scripts : {install: < command> }}`.
+                * this means that `yarn`, before execute this script, do a *"checksums"* with a *sha-1* that place in a parameter on the dependency `yarn.lock`.
+                * so if someone will try to switch the dns and hack to a npm repository, yarn will know that cause the *sha-1* in the repository isn't the some in the `yarn.lock` file.
+
+            </script>
+        </section>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/lib/js/head.min.js"></script>
+<script>
+    Reveal.initialize({
+        history: true,
+        slideNumber: true,
+        dependencies: [
+            {
+                src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/markdown/marked.min.js",
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/markdown/markdown.min.js",
+                condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }
+
+        ]
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "boostjs-yarn-to-npm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zamboney/yarn.git",
+  "author": "Ran Itzhaki <rani@sela.co.il>",
+  "license": "MIT",
+  "scripts": {
+    "presentation": "live-server --entry-file=index.html ./docs",
+    "sinopia": "cd npm && sinopia -c config.yaml"
+  },
+  "devDependencies": {
+    "sinopia": "^1.4.0"
+  }
+}
