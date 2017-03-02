@@ -40,7 +40,7 @@
                 ###what is NPM
 
 
-                **NPM** stand for "**N**ode **P**ackage **M**anger" and it's come to handle node modules, from a remote and local repository, so that can distributed to other developers
+                **NPM** stand for "**N**ode **P**ackage **M**anger" and it's come to handle node modules, from a remote and local repository, so that can distributed to other.
 
 
                 NPM isn't the only package manger system, there is a lot other like:
@@ -52,7 +52,7 @@
 
                 The default repository that NPM set out of the box is https://registry.npmjs.org, and his site is https://www.npmjs.com
 
-                (in this we will use a local repository call [**sinopia**](https://www.npmjs.com/package/sinopia) but this is out of scope)
+                (in this lecture we will use a local repository call [**sinopia**](https://www.npmjs.com/package/sinopia))
 
 
 
@@ -68,7 +68,7 @@
 
                 to create a `package.json` file run `npm init`, this will start to ask you question about you package and place them in the file
 
-                (also know commend is `npm init -f`, this will auto replay the question and just create the `package.json`)
+                (`npm init -f` will auto replay the question and just create the `package.json`)
 
 
                 #### package.json `dependencies` (1/2)
@@ -165,10 +165,9 @@
                 ## Why `yarn` fast.
 
 
-                `npm install` is a long process.
-                the reason for that is that `npm install` work one by one (download and build one package at a time).
+                `npm install` is a long process. the reason for that is that `npm install` work one by one (download and build one package at a time).
 
-                also `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies.
+                although `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies.
 
 
                 `yarn` doesn't work like `npm`.
@@ -187,8 +186,37 @@
                 ## Why `yarn` reliable
 
 
-                * hello
+                * `npm`, as mentioned before, using [`semver.inc`](https://github.com/npm/node-semver#prerelease-tags).
+                * in `semver.inc` the upgrade done, according to the prefix, on every `npm install` command
+                * this could create issues when trying to deliver the code or running it on remote machine (a.k.a. build machine)
 
+
+                `npm` have a special command that solve this called [`npm shrinkwrap`](https://docs.npmjs.com/cli/shrinkwrap).
+
+                what it does is generates a file called `npm-shrinkwrap.json` that specific the version that uses in package and when running `npm install` it will download the correct versions.
+
+
+                that means that every time `npm install <package-name> --save` runs the develop will have to run `npm shrinkwrap` right after to generates the `npm-shrinkwrap.json` file again.
+
+
+                `yarn` do this out of the box.
+
+                every time `yarn add <package-name>` runs a file called `yarn.lock` generates that contain the metadata of the current package.
+
+                so that the next running of `yarn` the `yarn` will know exactly what to download.
+
+
+                ## But Wait!
+
+                this could be easily solved just by removing the prefix of the version number on the `package.json`...
+
+                <!-- .element: class="fragment" -->
+                that is true but then the functionality of `npm update` will not work!
+
+                <!-- .element: class="fragment" -->
+
+
+                ###DEMO
 
 
                 ## Why `yarn` security
