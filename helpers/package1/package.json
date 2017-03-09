@@ -1,0 +1,12 @@
+{
+  "name": "package1",
+  "version": "1.0.0",
+  "description": "this is main packages",
+  "main": "index.js",
+  "scripts": {
+    "update": "npm version minor && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

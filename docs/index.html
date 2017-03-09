@@ -34,6 +34,7 @@
 
             <script type="text/template">
                 ##From NPM to Yarn
+                #### Publish and Install Node Packages
 
 
 
@@ -56,14 +57,13 @@
 
 
 
-                ###Create and Publish Packages
+                ###Create, Publish and Install Packages
 
 
                 #### `package.json`
                 * the manifest of each package is `package.json` file.
                 * this file contain the metadata of the package.
-                * the metadata contain a lot of properties, like name, version, description and etc... of the package.
-                * we will focus on `dependencies` property.
+                * the metadata contain a lot of properties, like name, version, description, **dependencies** and etc... of the package.
 
 
                 to create a `package.json` file just run `npm init` in the command promote, this will start to ask you question about you package and place them in the file
@@ -71,53 +71,41 @@
                 (`npm init -f` will auto replay the question and just create the `package.json`)
 
 
+                ### DEMO
+
+
+                #### Publish package
+                1. create an account in the repository.
+                2. register the account in the machine.
+                    * run `npm adduser` and enter the username and password.
+                3. `npm publish`.
+                    * package wouldn't upload if there is another package with the same **name and version**.
+                    * to solve this use `npm version major | minor | patch | etc..`.
+
+
+                ### DEMO
+
+
                 #### package.json `dependencies` (1/2)
-                * this property define list of **dependencies** for this package.
+                * this property define list of **dependencies** for the package.
                 * it's a key value object:
                     * the key represent the name of the the package.
                     * the value is the version of the package.
                 * the version system known as [`node semver.inc`](https://github.com/npm/node-semver).
 
 
-                ####node semver [advanced-range-syntax](https://github.com/npm/node-semver#advanced-range-syntax)
-                * this method of visioning using to auto update the version of the package.
-                * by using a `^` or `~` on the beginning of the `version` value the `node semver` will auto update the packages on the next `npm install`.
-                * [read more](https://github.com/npm/node-semver#advanced-range-syntax)
-
-
                 #### package.json `dependencies` (2/2)
-                * there are types of dependencies like `devDependencies` and `peerDependencies` (out of this lecture scope).
-                * add a new dependency to the package by running `npm install < package-name> --save`.
+                * there are other types of dependencies like `devDependencies` and `peerDependencies` (out of this lecture scope).
+                * add a new dependency to the package by running `npm install <package-name> --save`.
                 * installing the dependencies by running `npm install` on the folder that contain the `package.json`
 
 
-                #### package.json `dependencies` example
-                ```
-                    {
-                        "name": "guessing-game-ui",
-                        "version": "1.0.0",
-                        "description": "",
-                        "main": "index.js",
-                        "author": "",
-                        "license": "ISC",
-                        "dependencies": {
-                            "guessing-game-logic": "^1.0.1"
-                        }
-                    }
-                ```
-
-
-                #### Publish package (1/2)
-                * create an account in the repository (per repertory out of scope), done once per account.
-                * register the account in the machine, done once per machine.
-                    * run `npm adduser` and enter the username and password.
-
-
-                #### Publish package (2/2)
-                * `npm publish`.
-                    * this command upload the package to the repertory.
-                    * package wouldn't upload if there is another package with the same **name and version**.
-                    * to solve this use `npm version major | minor | patch | etc..`. this will update the version by the argument. then use `npm publish`.
+                ####node semver [advanced-range-syntax](https://github.com/npm/node-semver#advanced-range-syntax)
+                * this method of visioning using to auto update the version of the package.
+                * by using a `^` or `~` on the beginning of the `version` value the `node semver` will auto update the packages on the next `npm install`.
+                    * `^1.2.3` `:=` `>=1.2.3 <2.0.0`
+                    * `~1.2.3` `:=` `>=1.2.3 <1.3.0`
+                * [read more](https://github.com/npm/node-semver#advanced-range-syntax)
 
 
                 ### DEMO
@@ -208,17 +196,14 @@
                 ###DEMO
 
 
-                that means that every time `npm install <package-name> --save` runs the develop will have to run `npm shrinkwrap` right after to generates the `npm-shrinkwrap.json` file again.
-
-
-                ###DEMO
-
-
                 `yarn` do this out of the box.
 
                 every time `yarn add <package-name>` runs a file called `yarn.lock` generates that contain the metadata of the current package.
 
                 so that the next running of `yarn` the `yarn` will know exactly what to download.
+
+
+                ###DEMO
 
 
                 ## But Wait!
@@ -231,15 +216,41 @@
                 <!-- .element: class="fragment" -->
 
 
-                ###DEMO
+                ## Is `yarn` Secure?
 
 
-                ## Why `yarn` security
+                > Mega Secure.
+                >
+                > Yarn uses checksums to verify the integrity of every installed package before its code is executed.
+
+                [https://yarnpkg.com](https://yarnpkg.com)
 
 
-                * `npm` can execute file, after install, using the `{scripts : {install: < command> }}`.
-                * this means that `yarn`, before execute this script, do a *"checksums"* with a *sha-1* that place in a parameter on the dependency `yarn.lock`.
-                * so if someone will try to switch the dns and hack to a npm repository, yarn will know that cause the *sha-1* in the repository isn't the some in the `yarn.lock` file.
+                this is an open issue on `yarn` [github](https://github.com/yarnpkg/yarn/issues/1169).
+
+
+
+                ##Conclusions
+
+
+                ### `yarn` Pros
+                * using `yarn` will defiantly increase the speed of develop and deployment.
+                * `yarn` will sync your package so that "*work on my computer*" issues will defiantly decrease.
+                * no need to remember using spacial flags like `--save` and `npm shrinkwrap` `yarn` do it for you.
+
+
+                ## `yarn` Cons
+                * `yarn` is in his very early state and when starting to work with it you will get some wired behaviors.
+                * developers that using `npm` command will get very annoyed to switch to this similar but different syntax.
+                * using a proxy to tunnel for the repository will always be a bad practice.
+
+
+
+                #Tank You
+                ### Ran Itzhaki
+                * [https://github.com/zamboney](https://github.com/zamboney)
+                * [http://stackoverflow.com/users/2630100/zamboney](http://stackoverflow.com/users/2630100/zamboney)
+
 
             </script>
         </section>

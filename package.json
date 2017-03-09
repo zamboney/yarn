@@ -7,9 +7,18 @@
   "license": "MIT",
   "scripts": {
     "presentation": "live-server --entry-file=index.html ./docs",
-    "sinopia": "cd npm && sinopia -c config.yaml"
+    "sinopia": "cd npm && sinopia -c config.yaml",
+    "clear-sinopia": "rimraf npm/storage/*",
+    "clear-packages": "rimraf npm/packages/*",
+    "create-package": "node helpers/createPackage.js",
+    "create-main": "node helpers/createPackage.js --main",
+    "create-dep-main": "node helpers/createPackage.js --depMain"
   },
   "devDependencies": {
     "sinopia": "^1.4.0"
+  },
+  "dependencies": {
+    "args": "^2.3.0",
+    "rimraf": "^2.6.1"
   }
 }
