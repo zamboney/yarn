@@ -66,22 +66,28 @@
                 * we will focus on `dependencies` property.
 
 
-                to create a `package.json` file run `npm init`, this will start to ask you question about you package and place them in the file
+                to create a `package.json` file just run `npm init` in the command promote, this will start to ask you question about you package and place them in the file
 
                 (`npm init -f` will auto replay the question and just create the `package.json`)
 
 
                 #### package.json `dependencies` (1/2)
-                * this property list the **dependencies** of this package.
+                * this property define list of **dependencies** for this package.
                 * it's a key value object:
-                    * the key represent the name of the the package
+                    * the key represent the name of the the package.
                     * the value is the version of the package.
-                * the version system known as [`semver.inc`](https://github.com/npm/node-semver#prerelease-tags)
+                * the version system known as [`node semver.inc`](https://github.com/npm/node-semver).
+
+
+                ####node semver [advanced-range-syntax](https://github.com/npm/node-semver#advanced-range-syntax)
+                * this method of visioning using to auto update the version of the package.
+                * by using a `^` or `~` on the beginning of the `version` value the `node semver` will auto update the packages on the next `npm install`.
+                * [read more](https://github.com/npm/node-semver#advanced-range-syntax)
 
 
                 #### package.json `dependencies` (2/2)
                 * there are types of dependencies like `devDependencies` and `peerDependencies` (out of this lecture scope).
-                * add a new dependency to the package by running `npm install < package-name > --save`.
+                * add a new dependency to the package by running `npm install < package-name> --save`.
                 * installing the dependencies by running `npm install` on the folder that contain the `package.json`
 
 
@@ -102,13 +108,13 @@
 
 
                 #### Publish package (1/2)
-                1. create an account in the repository (per repertory out of scope), done once per account.
-                2. register the account in the machine, done once per machine.
+                * create an account in the repository (per repertory out of scope), done once per account.
+                * register the account in the machine, done once per machine.
                     * run `npm adduser` and enter the username and password.
 
 
                 #### Publish package (2/2)
-                3. `npm publish`.
+                * `npm publish`.
                     * this command upload the package to the repertory.
                     * package wouldn't upload if there is another package with the same **name and version**.
                     * to solve this use `npm version major | minor | patch | etc..`. this will update the version by the argument. then use `npm publish`.
@@ -122,8 +128,8 @@
 
 
                 ### What is `yarn`?
-                * `yarn`,just like `npm`, is a JavaScript package manger.
-                * `yarn` come to solve same issues that `npm` have.
+                * `yarn`, just like `npm`, is a JavaScript package manger.
+                * `yarn` solve some issues that `npm` have.
                 * `yarn` can use `npm` repositories (so no need to create new repository just for `yarn`)
                 * develop by **Facebook** with **Google**
 
@@ -170,7 +176,7 @@
                 although `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies.
 
 
-                `yarn` doesn't work like `npm`.
+                `yarn` don't work like `npm`.
 
                 `yarn` download the dependencies parallel and store all of them in a cache folder that reachable offline.
 
@@ -191,12 +197,21 @@
                 * this could create issues when trying to deliver the code or running it on remote machine (a.k.a. build machine)
 
 
+                ###DEMO
+
+
                 `npm` have a special command that solve this called [`npm shrinkwrap`](https://docs.npmjs.com/cli/shrinkwrap).
 
                 what it does is generates a file called `npm-shrinkwrap.json` that specific the version that uses in package and when running `npm install` it will download the correct versions.
 
 
+                ###DEMO
+
+
                 that means that every time `npm install <package-name> --save` runs the develop will have to run `npm shrinkwrap` right after to generates the `npm-shrinkwrap.json` file again.
+
+
+                ###DEMO
 
 
                 `yarn` do this out of the box.
