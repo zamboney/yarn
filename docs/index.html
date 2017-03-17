@@ -3,6 +3,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/css/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.4.1/css/theme/simple.min.css">
     <style>
+        div.reveal::after{
+            content: '';
+            background: url(NPM_icon.jpg) 100% 100%;
+            position: absolute;
+            width: 100px;
+            background-size: 100px;
+            height: 48px;
+            right: 10px;
+            top: 10px;
+        }
+        div.reveal::before {
+            content: '';
+            background: url(yarn_icon.png) 100% 100%;
+            position: absolute;
+            width: 100px;
+            background-size: 100px;
+            height: 100px;
+            left: 10px;
+            bottom: 10px;
+        }
         code {
             padding: 0;
             padding-top: 0.2em;
@@ -12,7 +32,10 @@
             background-color: rgba(0, 0, 0, 0.04);
             border-radius: 3px;
         }
-
+        img.split-image {
+            width: 48%;
+            display: inline-block;
+        }
         code:before {
             letter-spacing: -0.2em;
             content: "\00a0";
@@ -38,10 +61,10 @@
 
 
 
-                ###what is NPM
+                ###what is NPM?
 
 
-                **NPM** stand for "**N**ode **P**ackage **M**anger" and it's come to handle node modules, from a remote and local repository, so that can distributed to other.
+                **NPM** stand for "**N**ode **P**ackage **M**anger" and it's come to handle node modules, from a remote repository, so that can distributed to other.
 
 
                 NPM isn't the only package manger system, there is a lot other like:
@@ -54,6 +77,13 @@
                 The default repository that NPM set out of the box is https://registry.npmjs.org, and his site is https://www.npmjs.com
 
                 (in this lecture we will use a local repository call [**sinopia**](https://www.npmjs.com/package/sinopia))
+
+
+                #### `sinopia`
+                sinopia is a local npm registry. this means that instead of publish and installing packages from `npmjs.org` this module will get them form the local file system
+
+                [localhost:8082](http://localhost:8082)
+
 
 
 
@@ -71,7 +101,7 @@
                 (`npm init -f` will auto replay the question and just create the `package.json`)
 
 
-                ### DEMO
+                ### DEMO1
 
 
                 #### Publish package
@@ -83,7 +113,7 @@
                     * to solve this use `npm version major | minor | patch | etc..`.
 
 
-                ### DEMO
+                ### DEMO2
 
 
                 #### package.json `dependencies` (1/2)
@@ -100,15 +130,18 @@
                 * installing the dependencies by running `npm install` on the folder that contain the `package.json`
 
 
+                ### DEMO3
+
+
                 ####node semver [advanced-range-syntax](https://github.com/npm/node-semver#advanced-range-syntax)
                 * this method of visioning using to auto update the version of the package.
                 * by using a `^` or `~` on the beginning of the `version` value the `node semver` will auto update the packages on the next `npm install`.
-                    * `^1.2.3` `:=` `>=1.2.3 <2.0.0`
-                    * `~1.2.3` `:=` `>=1.2.3 <1.3.0`
+                    * `^1.2.3` `:=` `>=1.2.3 <2.0.0` (a.k.a. last minor update)
+                    * `~1.2.3` `:=` `>=1.2.3 <1.3.0` (a.k.a. last patch update)
                 * [read more](https://github.com/npm/node-semver#advanced-range-syntax)
 
 
-                ### DEMO
+                ### DEMO4
 
 
 
@@ -125,7 +158,7 @@
                 ### Why using `yarn`?
                 * more fast.
                 * more reliable.
-                * more secure.
+                * ~~more secure~~.
 
 
                 ### Start using `yarn`.
@@ -155,13 +188,16 @@
                 * `test`
 
 
+                ###DEMO5
+
+
 
                 ## Why `yarn` fast.
 
 
                 `npm install` is a long process. the reason for that is that `npm install` work one by one (download and build one package at a time).
 
-                although `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies.
+                although `npm` have a cache mechanism, `npm install` must have an internet connection to get the package dependencies(**not working offline!**).
 
 
                 `yarn` don't work like `npm`.
@@ -170,7 +206,94 @@
 
                 * once `yarn` call
                 * for dependencies that **hasn't** been cached, `yarn` will download them parallel, and store them in the cache folder.
-                * for dependencies that **has** been cache, `yarn` will get them form the cache folder.
+                * for dependencies that **has** been cache, `yarn` will get them form the cache folder (**offline!**).
+
+
+                ### `package.json` speed test
+                ```
+                    {
+                        "name": "node",
+                        "version": "0.0.1",
+                        "description": "Test npm vs yarn install speed",
+                        "engineStrict": true,
+                        "devEngines": {
+                            "node": "^6.7.0",
+                            "npm": "^3.10.3"
+                        },
+                        "devDependencies": {
+                            "autoprefixer": "^6.5.0",
+                            "babel-core": "^6.17.0",
+                            "babel-eslint": "^7.0.0",
+                            "babel-jest": "^16.0.0",
+                            "babel-plugin-add-module-exports": "^0.2.1",
+                            "babel-plugin-lodash": "^3.2.9",
+                            "babel-plugin-transform-decorators-legacy": "^1.3.4",
+                            "babel-plugin-transform-define": "^1.2.0",
+                            "babel-plugin-transform-react-inline-elements": "^6.8.0",
+                            "babel-plugin-transform-runtime": "^6.15.0",
+                            "babel-preset-es2015": "^6.16.0",
+                            "babel-preset-react": "^6.16.0",
+                            "babel-preset-react-optimize": "^1.0.1",
+                            "babel-preset-stage-0": "^6.16.0",
+                            "eslint": "^3.7.1",
+                            "eslint-config-airbnb": "^12.0.0",
+                            "eslint-plugin-import": "^1.8.1",
+                            "eslint-plugin-jsx-a11y": "^2.2.2",
+                            "eslint-plugin-react": "^6.3.0",
+                            "fbjs-scripts": "^0.7.1",
+                            "gulp": "^3.9.1",
+                            "jest": "^16.0.0",
+                            "laravel-elixir-postcss": "^0.3.6",
+                            "postcss-reporter": "^1.4.1",
+                            "precss": "^1.4.0",
+                            "react-test-renderer": "^15.3.2",
+                            "stylelint": "^7.3.1",
+                            "stylelint-config-suitcss": "^8.0.0",
+                            "why-did-you-update": "0.0.8"
+                        },
+                        "dependencies": {
+                            "babel-polyfill": "^6.16.0",
+                            "babel-runtime": "^6.11.6",
+                            "bootstrap-sass": "^3.3.7",
+                            "capitalize": "^1.0.0",
+                            "classnames": "^2.2.5",
+                            "fbjs": "^0.8.5",
+                            "highlight.js": "^9.7.0",
+                            "html-to-text": "^2.1.3",
+                            "http-client": "^4.3.1",
+                            "isomorphic-fetch": "^2.2.1",
+                            "laravel-elixir": "^5.0.0",
+                            "moment": "^2.15.1",
+                            "query-string": "^4.2.3",
+                            "raf-throttle": "^1.1.1",
+                            "ramda": "^0.22.1",
+                            "react": "^15.3.2",
+                            "react-bootstrap": "^0.30.5",
+                            "react-dom": "^15.3.2",
+                            "react-dom-utils": "^2.0.0",
+                            "react-google-maps": "^4.11.0",
+                            "react-moment-proptypes": "^1.2.0",
+                            "react-overlays": "^0.6.10",
+                            "react-select": "^1.0.0-rc.2",
+                            "recompose": "^0.20.2",
+                            "rxjs": "^5.0.0-beta.12"
+                        }
+                    }
+                ```
+
+
+                ### no cache speed test
+                | NPM | YARN |
+                | ----| ---- |
+                |![npm no cache](npm_no_cache.gif)| ![yarn no cache](yarn_no_cache.gif)|
+                |5:30 m| 0:51 m|
+
+
+                ### cached speed test
+                | NPM | YARN |
+                | ----| ---- |
+                |![npm cache](npm_cache.gif)| ![yarn cache](yarn_cache.gif)|
+                |2:58 m| 0:22 m|
 
 
                 ##[npm vs yarn speed test](https://github.com/appleboy/npm-vs-yarn)
@@ -185,7 +308,7 @@
                 * this could create issues when trying to deliver the code or running it on remote machine (a.k.a. build machine)
 
 
-                ###DEMO
+                ###DEMO6
 
 
                 `npm` have a special command that solve this called [`npm shrinkwrap`](https://docs.npmjs.com/cli/shrinkwrap).
@@ -193,7 +316,7 @@
                 what it does is generates a file called `npm-shrinkwrap.json` that specific the version that uses in package and when running `npm install` it will download the correct versions.
 
 
-                ###DEMO
+                ###DEMO7
 
 
                 `yarn` do this out of the box.
@@ -203,7 +326,7 @@
                 so that the next running of `yarn` the `yarn` will know exactly what to download.
 
 
-                ###DEMO
+                ###DEMO8
 
 
                 ## But Wait!
@@ -216,6 +339,7 @@
                 <!-- .element: class="fragment" -->
 
 
+
                 ## Is `yarn` Secure?
 
 
@@ -226,7 +350,20 @@
                 [https://yarnpkg.com](https://yarnpkg.com)
 
 
-                this is an open issue on `yarn` [github](https://github.com/yarnpkg/yarn/issues/1169).
+                this is an open issue on `yarn` [github](https://github.com/yarnpkg/yarn/issues/1169) that question this statement.
+
+
+                the questions that still didn't get answer are:
+                * how does yarn use cryptographic hashes to ensure that packages are unmodified?
+                * when are hashes generated and when are they compared?
+                * why was the SHA1 hash chosen, when more modern and secure primitives such as SHA256 are recommended by security experts?
+                * etc...
+
+
+                the real difficultly, yarn having, is that they relay on npm.
+
+                * npm use SHA1, so yarn must use SHA1 for npm packages.
+                * etc..
 
 
 
@@ -239,19 +376,20 @@
                 * no need to remember using spacial flags like `--save` and `npm shrinkwrap` `yarn` do it for you.
 
 
-                ## `yarn` Cons
+                ### `yarn` Cons
                 * `yarn` is in his very early state and when starting to work with it you will get some wired behaviors.
                 * developers that using `npm` command will get very annoyed to switch to this similar but different syntax.
                 * using a proxy to tunnel for the repository will always be a bad practice.
 
 
+                ![kitty](kitty.jpg)
 
-                #Tank You
+
+
+                #Tank You!
                 ### Ran Itzhaki
                 * [https://github.com/zamboney](https://github.com/zamboney)
                 * [http://stackoverflow.com/users/2630100/zamboney](http://stackoverflow.com/users/2630100/zamboney)
-
-
             </script>
         </section>
     </div>

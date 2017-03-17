@@ -25,9 +25,9 @@ if (!flags.depMain && !flags.main) {
     packageName = path.join('packages', 'package' + (last_package.length + 1));
     fs.mkdirSync(packageName);
 }
-fs.writeFileSync(path.join(__dirname, '..', packageName, '.npmrc'), 'registry=http://localhost:8082');
+fs.writeFileSync(path.join(__dirname, '..', packageName, '.npmrc'), 'registry=http://localhost:8082\n');
 console.log(path.join(__dirname, '..', packageName, '.npmrc'), 'created');
-fs.writeFileSync(path.join(__dirname, '..', packageName, '.yarnrc'), 'registry "http://localhost:8082"');
+fs.writeFileSync(path.join(__dirname, '..', packageName, '.yarnrc'), 'registry "http://localhost:8082"\n');
 console.log(path.join(__dirname, '..', packageName, '.yarnrc'), 'created');
 console.log(packageName, 'created');
 
